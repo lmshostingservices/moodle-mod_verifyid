@@ -1,0 +1,656 @@
+{{!
+    AI Verify ID - Student View Template
+    
+    v3.0.0 - Beautiful styled interface with face detection overlay.
+    All styles contained within #verifyid-root to prevent nav interference.
+    
+    @package    mod_verifyid
+    @copyright  2025 Essay Grader AI
+    @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div id="verifyid-root">
+    <style>
+        #verifyid-root {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #verifyid-root .verifyid-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        #verifyid-root .verifyid-header h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        #verifyid-root .verifyid-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        #verifyid-root .verifyid-instructions {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border: 1px solid #7dd3fc;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+        #verifyid-root .verifyid-instructions h5 {
+            color: #0369a1;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        #verifyid-root .verifyid-instructions p {
+            color: #075985;
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        #verifyid-root .verifyid-step-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+        #verifyid-root .verifyid-step-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        #verifyid-root .verifyid-step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-bottom: 1px solid #e5e7eb;
+        }
+        #verifyid-root .verifyid-step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        #verifyid-root .verifyid-step-title {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.05rem;
+        }
+        #verifyid-root .verifyid-step-body {
+            padding: 20px;
+        }
+        #verifyid-root .verifyid-step-desc {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        #verifyid-root .verifyid-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        #verifyid-root .verifyid-upload-area:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        #verifyid-root .verifyid-upload-area.has-file {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+        #verifyid-root .verifyid-upload-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 12px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #verifyid-root .verifyid-upload-icon svg {
+            width: 24px;
+            height: 24px;
+            color: #64748b;
+        }
+        #verifyid-root .verifyid-upload-text {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        #verifyid-root .verifyid-upload-hint {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        #verifyid-root .verifyid-upload-guidance {
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            border: 1px solid #7dd3fc;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #0369a1;
+            line-height: 1.5;
+        }
+        #verifyid-root .verifyid-upload-guidance svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: -3px;
+            margin-right: 6px;
+            color: #0284c7;
+        }
+        #verifyid-root .verifyid-file-input {
+            display: none;
+        }
+        #verifyid-root .verifyid-preview {
+            margin-top: 16px;
+            text-align: center;
+        }
+        #verifyid-root .verifyid-preview img {
+            max-height: 200px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        #verifyid-root .verifyid-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        #verifyid-root .verifyid-btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+        }
+        #verifyid-root .verifyid-btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        #verifyid-root .verifyid-btn-primary:disabled {
+            background: #94a3b8;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #verifyid-root .verifyid-btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+        #verifyid-root .verifyid-btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        #verifyid-root .verifyid-btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+        }
+        #verifyid-root .verifyid-btn-success:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-1px);
+        }
+        #verifyid-root .verifyid-btn-success:disabled {
+            background: #94a3b8;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #verifyid-root .verifyid-camera-container {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        #verifyid-root .verifyid-video-wrapper {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        #verifyid-root #verifyid-video {
+            width: 100%;
+            display: block;
+            border-radius: 8px;
+        }
+        #verifyid-root .verifyid-face-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 280px;
+            border: 4px dashed #fbbf24;
+            border-radius: 24px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        #verifyid-root .verifyid-face-frame.face-detected {
+            border-color: #22c55e;
+            border-style: solid;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+        #verifyid-root .verifyid-face-tick {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.5);
+        }
+        #verifyid-root .verifyid-face-tick.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        #verifyid-root .verifyid-face-tick svg {
+            width: 48px;
+            height: 48px;
+            color: white;
+        }
+        #verifyid-root .verifyid-camera-hint {
+            color: #94a3b8;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            transition: color 0.3s ease;
+        }
+        #verifyid-root .verifyid-camera-hint.ready {
+            color: #22c55e;
+            font-weight: 600;
+        }
+        #verifyid-root .verifyid-camera-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        #verifyid-root .verifyid-submit-section {
+            text-align: center;
+            padding: 24px 0;
+            margin-top: 8px;
+        }
+        #verifyid-root .verifyid-submit-btn {
+            padding: 16px 48px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+        }
+        #verifyid-root .verifyid-loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        #verifyid-root .verifyid-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: verifyid-spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes verifyid-spin {
+            to { transform: rotate(360deg); }
+        }
+        #verifyid-root .verifyid-loading-text {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        #verifyid-root .verifyid-check-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #22c55e;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+        #verifyid-root .verifyid-check-icon svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+        }
+    </style>
+
+    <div class="verifyid-header">
+        <h2>{{#str}}pluginname, mod_verifyid{{/str}}</h2>
+        <p>Complete the steps below to verify your identity</p>
+    </div>
+
+    {{#hasinstructions}}
+    <div class="verifyid-instructions">
+        <h5>{{#str}}instructions, mod_verifyid{{/str}}</h5>
+        <p>{{{instructions}}}</p>
+    </div>
+    {{/hasinstructions}}
+
+    <div class="verifyid-step-card">
+        <div class="verifyid-step-header">
+            <div class="verifyid-step-number">1</div>
+            <div class="verifyid-step-title">{{#str}}step1_title, mod_verifyid{{/str}}</div>
+            <div id="step1-check" class="verifyid-check-icon" style="display:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+        </div>
+        <div class="verifyid-step-body">
+            <p class="verifyid-step-desc">{{#str}}step1_desc, mod_verifyid{{/str}}</p>
+            <label class="verifyid-upload-area" id="upload-area">
+                <div class="verifyid-upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div class="verifyid-upload-text">Click to upload your ID document</div>
+                <div class="verifyid-upload-hint">Passport, driver's license, or national ID card</div>
+                <input type="file" id="id-file-input" class="verifyid-file-input" accept="image/*">
+            </label>
+            <div class="verifyid-upload-guidance">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {{#str}}id_upload_guidance, mod_verifyid{{/str}}
+            </div>
+            <div id="id-preview" class="verifyid-preview"></div>
+        </div>
+    </div>
+
+    <div class="verifyid-step-card">
+        <div class="verifyid-step-header">
+            <div class="verifyid-step-number">2</div>
+            <div class="verifyid-step-title">{{#str}}step2_title, mod_verifyid{{/str}}</div>
+            <div id="step2-check" class="verifyid-check-icon" style="display:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+        </div>
+        <div class="verifyid-step-body">
+            <p class="verifyid-step-desc">{{#str}}step2_desc, mod_verifyid{{/str}}</p>
+            <button type="button" id="start-camera-btn" class="verifyid-btn verifyid-btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                {{#str}}start_camera, mod_verifyid{{/str}}
+            </button>
+            <div id="camera-container" class="verifyid-camera-container" style="display:none;">
+                <div class="verifyid-video-wrapper">
+                    <video id="verifyid-video" autoplay playsinline></video>
+                    <div id="face-frame" class="verifyid-face-frame"></div>
+                    <div id="face-tick" class="verifyid-face-tick">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                </div>
+                <p id="camera-hint" class="verifyid-camera-hint">Position your face within the rectangle</p>
+                <div class="verifyid-camera-actions">
+                    <button type="button" id="capture-btn" class="verifyid-btn verifyid-btn-primary" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <circle cx="12" cy="13" r="3" />
+                        </svg>
+                        {{#str}}capture_photo, mod_verifyid{{/str}}
+                    </button>
+                </div>
+            </div>
+            <div id="selfie-preview" class="verifyid-preview"></div>
+            <button type="button" id="retake-btn" class="verifyid-btn verifyid-btn-secondary" style="display:none; margin-top: 12px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {{#str}}retake_photo, mod_verifyid{{/str}}
+            </button>
+        </div>
+    </div>
+
+    <div class="verifyid-submit-section">
+        <button type="button" id="submit-btn" class="verifyid-btn verifyid-btn-success verifyid-submit-btn" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            {{#str}}submit_verification, mod_verifyid{{/str}}
+        </button>
+    </div>
+
+    <div id="loading-overlay" class="verifyid-loading">
+        <div class="verifyid-spinner"></div>
+        <p class="verifyid-loading-text">{{#str}}verifying, mod_verifyid{{/str}}</p>
+    </div>
+</div>
+
+{{#js}}
+(function() {
+    var idImageData = null;
+    var selfieData = null;
+    var videoStream = null;
+    var faceDetected = false;
+    var detectionInterval = null;
+    var cmid = '{{cmid}}';
+    var sesskey = '{{sesskey}}';
+
+    document.getElementById('id-file-input').addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            idImageData = ev.target.result;
+            document.getElementById('id-preview').innerHTML = '<img src="' + ev.target.result + '">';
+            document.getElementById('upload-area').classList.add('has-file');
+            document.getElementById('step1-check').style.display = 'inline-flex';
+            updateSubmitButton();
+        };
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('start-camera-btn').addEventListener('click', function() {
+        navigator.mediaDevices.getUserMedia({video: {facingMode: 'user', width: {ideal: 640}, height: {ideal: 480}}})
+            .then(function(stream) {
+                videoStream = stream;
+                var video = document.getElementById('verifyid-video');
+                video.srcObject = stream;
+                document.getElementById('start-camera-btn').style.display = 'none';
+                document.getElementById('camera-container').style.display = 'block';
+                // v3.1.9 FIX-VI-CAPTURE: Enable capture button immediately when camera is
+                // running — face detection is advisory only and must not block submission.
+                var captureBtn = document.getElementById('capture-btn');
+                captureBtn.disabled = false;
+                var cameraHint = document.getElementById('camera-hint');
+                if (cameraHint) cameraHint.textContent = 'Camera ready — position your face and capture';
+                startFaceDetection();
+            })
+            .catch(function(err) {
+                alert('Camera error: ' + err.message);
+            });
+    });
+
+    function startFaceDetection() {
+        var video = document.getElementById('verifyid-video');
+        var faceFrame = document.getElementById('face-frame');
+        var faceTick = document.getElementById('face-tick');
+        var cameraHint = document.getElementById('camera-hint');
+        var captureBtn = document.getElementById('capture-btn');
+        
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        
+        detectionInterval = setInterval(function() {
+            if (video.readyState !== 4) return;
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+            
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            var detected = detectFaceSimple(imageData, canvas.width, canvas.height);
+            
+            // v3.1.9 FIX-VI-CAPTURE: Face detection is advisory only — button stays enabled.
+            if (detected && !faceDetected) {
+                faceDetected = true;
+                faceFrame.classList.add('face-detected');
+                faceTick.classList.add('visible');
+                cameraHint.classList.add('ready');
+                cameraHint.textContent = 'Face detected - Ready to capture!';
+            } else if (!detected && faceDetected) {
+                faceDetected = false;
+                faceFrame.classList.remove('face-detected');
+                faceTick.classList.remove('visible');
+                cameraHint.classList.remove('ready');
+                cameraHint.textContent = 'Position your face within the rectangle';
+            }
+        }, 200);
+    }
+    
+    function detectFaceSimple(imageData, width, height) {
+        var data = imageData.data;
+        var centerX = width / 2;
+        var centerY = height / 2;
+        var checkWidth = width * 0.4;
+        var checkHeight = height * 0.5;
+        var skinPixels = 0;
+        var totalPixels = 0;
+        
+        var startX = Math.floor(centerX - checkWidth / 2);
+        var endX = Math.floor(centerX + checkWidth / 2);
+        var startY = Math.floor(centerY - checkHeight / 2);
+        var endY = Math.floor(centerY + checkHeight / 2);
+        
+        for (var y = startY; y < endY; y += 4) {
+            for (var x = startX; x < endX; x += 4) {
+                var idx = (y * width + x) * 4;
+                var r = data[idx];
+                var g = data[idx + 1];
+                var b = data[idx + 2];
+                
+                if (isSkinColor(r, g, b)) {
+                    skinPixels++;
+                }
+                totalPixels++;
+            }
+        }
+        
+        var skinRatio = skinPixels / totalPixels;
+        return skinRatio > 0.15;
+    }
+    
+    function isSkinColor(r, g, b) {
+        var max = Math.max(r, g, b);
+        var min = Math.min(r, g, b);
+        
+        return r > 60 && g > 40 && b > 20 &&
+               r > g && r > b &&
+               (max - min) > 15 &&
+               Math.abs(r - g) > 15 &&
+               r > 80;
+    }
+
+    document.getElementById('capture-btn').addEventListener('click', function() {
+        
+        var video = document.getElementById('verifyid-video');
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        selfieData = canvas.toDataURL('image/jpeg', 0.9);
+        document.getElementById('selfie-preview').innerHTML = '<img src="' + selfieData + '">';
+        
+        if (detectionInterval) {
+            clearInterval(detectionInterval);
+            detectionInterval = null;
+        }
+        if (videoStream) {
+            videoStream.getTracks().forEach(function(t) { t.stop(); });
+        }
+        document.getElementById('camera-container').style.display = 'none';
+        document.getElementById('retake-btn').style.display = 'inline-flex';
+        document.getElementById('step2-check').style.display = 'inline-flex';
+        updateSubmitButton();
+    });
+
+    document.getElementById('retake-btn').addEventListener('click', function() {
+        selfieData = null;
+        faceDetected = false;
+        document.getElementById('selfie-preview').innerHTML = '';
+        document.getElementById('retake-btn').style.display = 'none';
+        document.getElementById('step2-check').style.display = 'none';
+        document.getElementById('face-frame').classList.remove('face-detected');
+        document.getElementById('face-tick').classList.remove('visible');
+        document.getElementById('camera-hint').classList.remove('ready');
+        document.getElementById('camera-hint').textContent = 'Position your face within the rectangle';
+        document.getElementById('capture-btn').disabled = true;
+        document.getElementById('start-camera-btn').click();
+        updateSubmitButton();
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        if (!idImageData || !selfieData) return;
+        document.getElementById('loading-overlay').style.display = 'block';
+        document.getElementById('submit-btn').disabled = true;
+
+        var formData = new FormData();
+        formData.append('action', 'submit');
+        formData.append('cmid', cmid);
+        formData.append('sesskey', sesskey);
+        formData.append('idimage', idImageData);
+        formData.append('selfie', selfieData);
+
+        fetch(M.cfg.wwwroot + '/mod/verifyid/ajax.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.error || 'Verification failed');
+                document.getElementById('loading-overlay').style.display = 'none';
+                updateSubmitButton();
+            }
+        })
+        .catch(function(err) {
+            alert('Error: ' + err.message);
+            document.getElementById('loading-overlay').style.display = 'none';
+            updateSubmitButton();
+        });
+    });
+
+    function updateSubmitButton() {
+        document.getElementById('submit-btn').disabled = !(idImageData && selfieData);
+    }
+})();
+{{/js}}
