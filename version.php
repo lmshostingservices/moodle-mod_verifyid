@@ -30,8 +30,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_verifyid';
-$plugin->version   = 2026072300235;   // 2026-05-12, v3.1.10
+$plugin->version   = 2026072300236;   // 2026-05-12, v3.1.10
 $plugin->requires = 2022041900;
 $plugin->supported  = [400, 500];  // Moodle 4.0 to 5.x
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release   = '3.1.13'; // FIX-CURL-BATCH: ajax.php switched from raw curl_init() to Moodle \curl wrapper + write_close(). No DB schema changes. Savepoint 2026051200320. // FIX-VI-CAPTURE: Enable selfie capture button immediately on camera start; face detection is advisory only.
+$plugin->release   = '3.1.14'; // FIX-CURL-BATCH: ajax.php switched from raw curl_init() to Moodle \curl wrapper + write_close(). No DB schema changes. Savepoint 2026051200320. // FIX-VI-CAPTURE: Enable selfie capture button immediately on camera start; face detection is advisory only.

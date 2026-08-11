@@ -28,7 +28,6 @@ defined('MOODLE_INTERNAL') || die();
  * Define the complete verifyid structure for backup.
  */
 class backup_verifyid_activity_structure_step extends backup_activity_structure_step {
-
     /**
      * Define the structure of the backup file.
      *

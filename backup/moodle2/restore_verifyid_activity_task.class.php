@@ -30,7 +30,6 @@ require_once($CFG->dirroot . '/mod/verifyid/backup/moodle2/restore_verifyid_step
  * Restore task that provides all the settings and steps to perform one complete restore of the activity.
  */
 class restore_verifyid_activity_task extends restore_activity_task {
-
     /**
      * Define particular settings for the restore.
      */

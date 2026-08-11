@@ -190,7 +190,7 @@ echo html_writer::script("
 function filterStudents(query) {
     var cards = document.querySelectorAll('.submission-card');
     var lowerQuery = query.toLowerCase().trim();
-    cards.forEach(function(card) {
+    cards.forEach(function (card) {
         var name = card.getAttribute('data-student-name');
         if (lowerQuery === '' || name.indexOf(lowerQuery) !== -1) {
             card.style.display = '';
@@ -212,8 +212,8 @@ function doReview(attemptId, decision) {
         method: 'POST',
         body: formData
     })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
         if (data.success) {
             window.location.reload();
         } else {
