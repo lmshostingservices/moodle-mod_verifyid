@@ -1,13 +1,12 @@
 {
   "component": "mod_verifyid",
-  "version": "3.1.14",
-  "numeric_version": "2026072300",
-  "build_timestamp": "2026-08-11T00:00:00.000Z",
+  "version": "3.1.9",
+  "numeric_version": "2026041600319",
+  "build_timestamp": "2026-04-16T00:00:00.000Z",
   "folder": "mod_verifyid",
-  "verification": "10digit-migration-3.1.14",
+  "verification": "fix-vi-capture-v3.1.9",
   "changelog": [
-    "v3.1.9 - BUG FIX (FIX-VI-CAPTURE): The selfie capture button required faceDetected=true before it could be clicked. The skin-tone face-detection algorithm fails for many students (particularly darker skin tones), permanently blocking the selfie step and preventing course navigation. Fix: capture button is now enabled immediately when the camera starts. Face detection continues to run and provides visual feedback (tick/frame highlight + hint text) but no longer gates the button. If a student can see themselves in the camera, they can always capture. No DB schema changes. templates/student_view.mustache only. version.php \u2192 2026041600319.",
+    "v3.1.9 - BUG FIX (FIX-VI-CAPTURE): The selfie capture button required faceDetected=true before it could be clicked. The skin-tone face-detection algorithm fails for many students (particularly darker skin tones), permanently blocking the selfie step and preventing course navigation. Fix: capture button is now enabled immediately when the camera starts. Face detection continues to run and provides visual feedback (tick/frame highlight + hint text) but no longer gates the button. If a student can see themselves in the camera, they can always capture. No DB schema changes. templates/student_view.mustache only. version.php → 2026041600319.",
     "v3.1.8 - FIX: version number corrected to 13-digit YYYYMMDD00XXX format. No DB schema changes."
-  ],
-  "build_id": "770b9f2c8ac664e6"
+  ]
 }
