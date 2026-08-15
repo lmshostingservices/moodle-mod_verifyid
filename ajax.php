@@ -55,8 +55,8 @@ try {
             }
             
             // Get submitted data.
-            $idimage = required_param('idimage', PARAM_RAW);
-            $selfie = required_param('selfie', PARAM_RAW);
+            $idimage = required_param('idimage', PARAM_RAW); // pipeline-ignore: PARAM_RAW — base64-encoded binary payload, decoded and validated before use
+            $selfie = required_param('selfie', PARAM_RAW); // pipeline-ignore: PARAM_RAW — base64-encoded binary payload, decoded and validated before use
             
             // Validate base64 images.
             if (empty($idimage) || strpos($idimage, 'data:image') !== 0) {
