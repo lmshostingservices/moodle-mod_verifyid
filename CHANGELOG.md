@@ -1,3 +1,12 @@
+# Changelog
+
+## 3.1.16 (2026-10-15)
+
+- Restore release evidence with version-aligned archive metadata and an immutable new release identity.
+- Preserve all runtime code from the previously distributed 3.1.15 archive.
+
+## Historical archive notes
+
 # Changelog - AI Verify ID Activity Module
 
 All notable changes to this plugin will be documented in this file.
