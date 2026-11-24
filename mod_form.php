@@ -72,11 +72,21 @@ class mod_verifyid_mod_form extends moodleform_mod {
      */
     public function add_completion_rules() {
         $mform = $this->_form;
+        $name = 'completionverified' . $this->completion_suffix();
 
-        $mform->addElement('checkbox', 'completionverified', '', get_string('completionverified', 'mod_verifyid'));
-        $mform->addHelpButton('completionverified', 'completionverified', 'mod_verifyid');
+        $mform->addElement('checkbox', $name, '', get_string('completionverified', 'mod_verifyid'));
+        $mform->addHelpButton($name, 'completionverified', 'mod_verifyid');
 
-        return ['completionverified'];
+        return [$name];
+    }
+
+    /**
+     * Suffix Moodle 4.3+ adds to completion fields on the bulk default completion form.
+     *
+     * @return string
+     */
+    protected function completion_suffix(): string {
+        return method_exists($this, 'get_suffix') ? $this->get_suffix() : '';
     }
 
     /**
@@ -86,7 +96,7 @@ class mod_verifyid_mod_form extends moodleform_mod {
      * @return bool
      */
     public function completion_rule_enabled($data) {
-        return !empty($data['completionverified']);
+        return !empty($data['completionverified' . $this->completion_suffix()]);
     }
 
     /**
