@@ -138,13 +138,18 @@ function verifyid_get_coursemodule_info($coursemodule) {
     global $DB;
 
     $dbparams = ['id' => $coursemodule->instance];
-    $fields = 'id, name, intro, introformat';
+    $fields = 'id, name, intro, introformat, completionverified';
     if (!$verifyid = $DB->get_record('verifyid', $dbparams, $fields)) {
         return false;
     }
 
     $info = new cached_cm_info();
     $info->name = $verifyid->name;
+
+    // Populate the custom completion rules so \mod_verifyid\completion\custom_completion can read them.
+    if ($coursemodule->completion == COMPLETION_TRACKING_AUTOMATIC) {
+        $info->customdata['customcompletionrules']['completionverified'] = (int) $verifyid->completionverified;
+    }
 
     if ($coursemodule->showdescription) {
         $info->content = format_module_intro('verifyid', $verifyid, $coursemodule->id, false);

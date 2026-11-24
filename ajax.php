@@ -207,13 +207,11 @@ try {
             
             $DB->update_record('verifyid_attempts', $attempt);
             
-            // Update completion if approved.
-            if ($attempt->status === 'verified') {
-                $student = $DB->get_record('user', ['id' => $attempt->userid]);
-                $completion = new completion_info($course);
-                if ($completion->is_enabled($cm)) {
-                    $completion->update_state($cm, COMPLETION_COMPLETE, $attempt->userid);
-                }
+            // Re-check completion either way: approving completes the activity, and rejecting an
+            // attempt that was approved earlier takes the completion away again.
+            $completion = new completion_info($course);
+            if ($completion->is_enabled($cm)) {
+                $completion->update_state($cm, COMPLETION_UNKNOWN, $attempt->userid);
             }
             
             echo json_encode([

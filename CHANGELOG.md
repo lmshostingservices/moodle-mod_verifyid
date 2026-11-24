@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.17] - 2026-11-24
+
+- Fixed: "Student must be verified" never completed the activity on Moodle 4.x and 5.x, so learners stayed stuck after their ID was approved. The rule is now a proper Moodle completion rule: the activity completes as soon as an attempt is verified, by AI or by a trainer, and the rule shows on the activity and in completion reports.
+- The rule now also works on the bulk "Default activity completion" page (Moodle 4.3 and later).
+- Added a test data generator, so the activity can be created by Moodle's automated tests and by demo and course-building tools. Tests cover creating, listing, deleting, backing up and restoring the activity.
+
 ## 3.1.16 (2026-10-15)
 
 - Restore release evidence with version-aligned archive metadata and an immutable new release identity.

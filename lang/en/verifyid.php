@@ -61,6 +61,7 @@ $string['instructions'] = 'Custom instructions';
 $string['instructions_help'] = 'Additional instructions to display to students before they verify their identity.';
 
 // Completion.
+$string['completiondetail:verified'] = 'Have your identity verified';
 $string['completionverified'] = 'Student must be verified';
 $string['completionverified_help'] = 'If enabled, this activity is marked complete when the student\'s identity has been verified.';
 
