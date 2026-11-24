@@ -16,6 +16,8 @@
 
 namespace mod_verifyid\completion;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\mod_verifyid\completion\custom_completion::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\mod_verifyid\task\recalculate_completion::class)]
 /**
  * Tests for the AI Verify ID custom completion rule.
  *
@@ -26,8 +28,6 @@ namespace mod_verifyid\completion;
  * @covers     \mod_verifyid\completion\custom_completion
  * @covers     \mod_verifyid\task\recalculate_completion
  */
-#[\PHPUnit\Framework\Attributes\CoversClass(\mod_verifyid\completion\custom_completion::class)]
-#[\PHPUnit\Framework\Attributes\CoversClass(\mod_verifyid\task\recalculate_completion::class)]
 final class custom_completion_test extends \advanced_testcase {
     /**
      * Creates a course with completion on, a learner and an activity that needs verification.
