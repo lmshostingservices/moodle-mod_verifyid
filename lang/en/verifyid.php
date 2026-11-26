@@ -52,6 +52,7 @@ $string['auto_approve_threshold'] = 'Auto-approve threshold';
 $string['auto_approve_threshold_desc'] = 'Submissions with similarity scores at or above this percentage will be automatically approved (default: 80).';
 $string['review_threshold'] = 'Review threshold';
 $string['review_threshold_desc'] = 'Submissions with scores between this and auto-approve will require manual review. Below this will be auto-rejected (default: 70).';
+$string['byok_settings'] = 'Bring your own AI is on: the face and name check runs on this site\'s own AI and uses no LMS Labs credits.';
 $string['credits_heading'] = 'Credit Information';
 $string['credits_info'] = 'Each verification costs 1 credit. Purchase credits at lms-labs.com.';
 
@@ -141,6 +142,11 @@ $string['error_api'] = 'Verification failed. Please try again or contact support
 $string['error_insufficient_credits'] = 'Insufficient credits for verification. Please contact your administrator.';
 
 // Privacy.
+$string['privacy:metadata:byok_ai'] = 'When the administrator has chosen the site\'s own AI for vision in AI Grader Central Config, the check is sent from this site to that AI provider instead of LMS Labs.';
+$string['privacy:metadata:lmslabs'] = 'The identity check is sent to the LMS Labs service, which uses an AI vision model to compare the photos and the name.';
+$string['privacy:metadata:lmslabs:fullname'] = 'The learner\'s first, last and full name, compared with the name on the ID.';
+$string['privacy:metadata:lmslabs:idimage'] = 'The photo of the ID document.';
+$string['privacy:metadata:lmslabs:selfie'] = 'The webcam photo.';
 $string['privacy:metadata:verifyid_attempts'] = 'Information about identity verification attempts.';
 $string['privacy:metadata:verifyid_attempts:userid'] = 'The ID of the user who submitted the verification.';
 $string['privacy:metadata:verifyid_attempts:idimage'] = 'The uploaded ID document image.';

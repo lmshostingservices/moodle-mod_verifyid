@@ -111,6 +111,12 @@ if ($hassiteconfig && isset($settings)) {
     $settings->add(new admin_setting_heading(
         'mod_verifyid/credits_heading',
         get_string('credits_heading', 'mod_verifyid'),
-        get_string('credits_info', 'mod_verifyid')
+        \mod_verifyid\byok::uses()
+            ? html_writer::div(
+                html_writer::tag('i', '', ['class' => 'fa fa-microchip me-2', 'aria-hidden' => 'true']) .
+                    s(get_string('byok_settings', 'mod_verifyid')),
+                'alert alert-success d-flex align-items-center py-2'
+            )
+            : get_string('credits_info', 'mod_verifyid')
     ));
 }

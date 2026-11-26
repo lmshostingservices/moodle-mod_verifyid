@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.2.0] - 2026-11-26
+
+- Added Bring your own AI. When an administrator chooses the site's own AI for vision in AI Grader Central
+  Config (a yearly LMS Labs licence, with an OpenAI or Anthropic key), the face and name check runs on that AI
+  instead of at LMS Labs and uses no credits. It uses the same instructions, AI settings and 60/40 face and name
+  score as the LMS Labs service; this was checked against the service's own code on 43,000 generated requests and
+  AI answers, with no differences. Moodle's built-in AI cannot compare pictures, so it needs an own key.
+- The privacy metadata now declares where the photos and the learner's name are sent: LMS Labs, or the site's
+  own AI.
+
 ## [3.1.17] - 2026-11-24
 
 - Fixed: "Student must be verified" never completed the activity on Moodle 4.x and 5.x, so learners stayed stuck after their ID was approved. The rule is now a proper Moodle completion rule: the activity completes as soon as an attempt is verified, by AI or by a trainer, and the rule shows on the activity and in completion reports.
