@@ -61,6 +61,18 @@ class provider implements
             'privacy:metadata:verifyid_attempts'
         );
 
+        // The photos and the learner's name are sent for the check: to LMS Labs, or to the site's own AI.
+        $collection->add_external_location_link('lmslabs', [
+            'idimage' => 'privacy:metadata:lmslabs:idimage',
+            'selfie' => 'privacy:metadata:lmslabs:selfie',
+            'fullname' => 'privacy:metadata:lmslabs:fullname',
+        ], 'privacy:metadata:lmslabs');
+        $collection->add_external_location_link('byok_ai', [
+            'idimage' => 'privacy:metadata:lmslabs:idimage',
+            'selfie' => 'privacy:metadata:lmslabs:selfie',
+            'fullname' => 'privacy:metadata:lmslabs:fullname',
+        ], 'privacy:metadata:byok_ai');
+
         return $collection;
     }
 

@@ -30,8 +30,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_verifyid';
-$plugin->version   = 2026112400;
+$plugin->version   = 2026112600;
 $plugin->requires = 2022041900;
 $plugin->supported  = [400, 500];  // Moodle 4.0 to 5.x
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release   = '3.1.17';
+$plugin->release   = '3.2.0';

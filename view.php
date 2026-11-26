@@ -75,7 +75,7 @@ if (empty($apikey)) {
     $apikey = get_config('mod_verifyid', 'apikey');
 }
 
-if (empty($siteid) || empty($apikey)) {
+if ((empty($siteid) || empty($apikey)) && !\mod_verifyid\byok::uses()) {
     echo $OUTPUT->notification(get_string('not_configured', 'mod_verifyid'), 'warning');
     echo $OUTPUT->footer();
     return;

@@ -113,12 +113,19 @@ try {
                 'userFullName' => $userfullname,
             ]);
             
-            $curl = new \curl();
-            $curl->setopt(['CURLOPT_TIMEOUT' => 60]);
-            $curl->setHeader(['Content-Type: application/json']);
-            $response = $curl->post($apiendpoint, $postdata);
-            $httpcode = $curl->info['http_code'];
-            $curlerror = $curl->error;
+            // Bring your own AI: the check runs on this site's own AI, with no LMS Labs credits.
+            $ownai = \mod_verifyid\byok::answer($postdata);
+            if ($ownai !== null) {
+                [$httpcode, $response] = $ownai;
+                $curlerror = '';
+            } else {
+                $curl = new \curl();
+                $curl->setopt(['CURLOPT_TIMEOUT' => 60]);
+                $curl->setHeader(['Content-Type: application/json']);
+                $response = $curl->post($apiendpoint, $postdata);
+                $httpcode = $curl->info['http_code'];
+                $curlerror = $curl->error;
+            }
             
             if ($curlerror) {
                 throw new moodle_exception('error_api', 'mod_verifyid', '', $curlerror);
